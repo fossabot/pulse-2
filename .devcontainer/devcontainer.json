@@ -1,0 +1,25 @@
+{
+    "name": "pulse",
+    "dockerComposeFile": [
+        "docker-compose.yaml"
+    ],
+    "service": "devcontainer",
+    "workspaceFolder": "/workspace",
+    "shutdownAction": "stopCompose",
+    "remoteUser": "developer",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "BazelBuild.vscode-bazel",
+                "eamodio.gitlens",
+                "ms-python.python",
+                "rust-lang.rust-analyzer",
+                "golang.go",
+                "StackBuild.bazel-stack-vscode",
+                "ms-vscode.cpptools",
+                "tal7aouy.icons",
+                "tamasfe.even-better-toml"
+            ]
+        }
+    }
+}

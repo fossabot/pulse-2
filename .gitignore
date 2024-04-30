@@ -1,0 +1,7 @@
+bazel-*
+bomb
+credentials
+.DS_Store
+*.config.json
+rust/**/target
+coverage

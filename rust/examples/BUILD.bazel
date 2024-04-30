@@ -1,0 +1,13 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+rust_binary(
+    name = "simple",
+    srcs = [
+        "simple.rs",
+    ],
+    deps = [
+        "//:pulse",
+        "@crates//:tokio",
+        "@crates//:tracing",
+    ],
+)
