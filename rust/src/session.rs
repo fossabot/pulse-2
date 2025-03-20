@@ -1,71 +1,81 @@
-use crate::{Options, Result};
-use opentelemetry_sdk::trace::Tracer;
-use tracing::Subscriber;
-use tracing_opentelemetry::OpenTelemetryLayer;
-use tracing_subscriber::{layer::SubscriberExt, registry::LookupSpan, util::SubscriberInitExt};
+use crate::{error::Result, Config};
+use once_cell::sync::OnceCell;
+use opentelemetry::KeyValue;
+use opentelemetry_sdk::Resource;
 
-pub struct Session;
+static _SESSION: OnceCell<Session> = OnceCell::new();
 
-impl Drop for Session {
-    fn drop(&mut self) {
-        opentelemetry::global::shutdown_tracer_provider();
-    }
+pub fn init(config: &Config) -> Result<Session> {
+    _SESSION.get_or_try_init(|| Session::new(config)).cloned()
 }
 
-pub fn init() -> Result<Session> {
-    init_impl(Options::from_default()?)
-}
-
-pub fn init_with_options(options: Options) -> Result<Session> {
-    init_impl(Options::merge_with(options)?)
-}
-
-fn init_impl(options: Options) -> Result<Session> {
-    tracing_subscriber::registry()
-        .with(tracing_subscriber::filter::LevelFilter::from_level(
-            options.log_level.into(),
-        ))
-        .with(tracing_layer(&options)?)
-        .init();
+#[derive(Clone)]
+pub struct Session {
+    pub otel_resource: Resource,
 
     #[cfg(feature = "logs")]
-    {
-        if let Ok(Some(logger)) = logger(&options) {
-            log::set_boxed_logger(logger)?;
-        }
-        let l: log::Level = options.log_level.into();
-        log::set_max_level(l.to_level_filter());
-    }
+    _logger_provider: crate::log::LoggerProvider,
 
-    Ok(Session)
-}
-
-#[cfg_attr(not(feature = "trace"), allow(unused_variables, dead_code))]
-fn tracing_layer<'a, S>(options: &Options) -> Result<Option<OpenTelemetryLayer<S, Tracer>>>
-where
-    S: Subscriber + for<'span> LookupSpan<'span>,
-{
     #[cfg(feature = "trace")]
-    {
-        let tracer = crate::trace::layer(options)?;
-        Ok(Some(OpenTelemetryLayer::new(tracer)))
-    }
+    _tracer_provider: crate::trace::TracerProvider,
 
-    #[cfg(not(feature = "trace"))]
-    {
-        Ok(None)
-    }
+    #[cfg(feature = "metrics")]
+    _metrics_provider: crate::metrics::MetricsProvider,
 }
 
-#[cfg_attr(not(feature = "logs"), allow(unused_variables, dead_code))]
-fn logger(options: &Options) -> Result<Option<Box<dyn log::Log>>> {
-    #[cfg(feature = "logs")]
-    {
-        Ok(Some(Box::new(crate::log::Logger::new(options)?)))
-    }
+impl Session {
+    #[allow(unused_variables)]
+    pub(crate) fn new(config: &Config) -> Result<Self> {
+        let otel_resource = Resource::new(vec![
+            KeyValue::new(
+                opentelemetry_semantic_conventions::resource::SERVICE_NAME,
+                config.service_name.clone(),
+            ),
+            KeyValue::new(
+                opentelemetry_semantic_conventions::resource::SERVICE_VERSION,
+                config.service_version.clone(),
+            ),
+        ]);
 
-    #[cfg(not(feature = "logs"))]
-    {
-        Ok(None)
+        #[cfg(feature = "logs")]
+        let logger_provider = {
+            let provider = crate::log::LoggerProvider::new(otel_resource.clone(), config)?;
+            log::set_boxed_logger(provider.logger()?)?;
+            provider
+        };
+
+        #[cfg(feature = "trace")]
+        let tracer_provider = crate::trace::TracerProvider::new(otel_resource.clone(), config)?;
+
+        #[cfg(feature = "metrics")]
+        let metrics_provider = crate::metrics::MetricsProvider::new(otel_resource.clone(), config)?;
+
+        #[cfg(any(feature = "trace", feature = "metrics"))]
+        {
+            use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+
+            let registry = tracing_subscriber::registry();
+
+            #[cfg(feature = "metrics")]
+            let registry = registry.with(metrics_provider.layer());
+
+            #[cfg(feature = "trace")]
+            let registry = registry.with(tracer_provider.layer());
+
+            registry.init()
+        }
+
+        Ok(Self {
+            otel_resource: otel_resource.clone(),
+
+            #[cfg(feature = "logs")]
+            _logger_provider: logger_provider,
+
+            #[cfg(feature = "trace")]
+            _tracer_provider: tracer_provider,
+
+            #[cfg(feature = "metrics")]
+            _metrics_provider: metrics_provider,
+        })
     }
 }

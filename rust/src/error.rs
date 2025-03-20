@@ -1,19 +1,26 @@
-use log::SetLoggerError;
-use opentelemetry::{logs::LogError, trace::TraceError};
-
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
-    #[error("error loading options: {0}")]
-    ConfigurationError(#[from] figment::Error),
-
     #[error("{0}")]
-    OtlpTracerError(#[from] TraceError),
+    InvalidUrl(#[from] url::ParseError),
 
-    #[error("{0}")]
-    OtlpLogError(#[from] LogError),
+    #[error("unsupported url scheme: {0}")]
+    UnsupportedUrlScheme(String),
 
+    #[cfg(feature = "logs")]
     #[error("{0}")]
-    SetLoggerError(#[from] SetLoggerError),
+    SetLoggerError(#[from] log::SetLoggerError),
+
+    #[cfg(feature = "logs")]
+    #[error("{0}")]
+    OtelLog(#[from] opentelemetry_sdk::logs::LogError),
+
+    #[cfg(feature = "trace")]
+    #[error("{0}")]
+    OtelTrace(#[from] opentelemetry::trace::TraceError),
+
+    #[cfg(feature = "metrics")]
+    #[error("{0}")]
+    OtelMetric(#[from] opentelemetry_sdk::metrics::MetricError),
 }

@@ -1,0 +1,57 @@
+name: Development Tools
+description: Report issues or ask questions about development tools.
+title: "[Development Tools] "
+labels: ["development-tools"]
+body:
+  - type: markdown
+    attributes:
+      value: "For questions or reports about development tools, please provide detailed information."
+
+  - type: markdown
+    attributes:
+      value: "**Project Environment**"
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      description: Select your device.
+      options:
+        - Linux - x86_64
+        - Linux - aarch64
+        - macOS - Apple Silicon
+        - macOS - Intel
+        - Nvidia Jetson - Orion
+        - Nvidia Jetson - Xavier
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tool-name
+    attributes:
+      label: Tool Name
+      description: "Select the tool you are using."
+      options:
+        - Bazel
+        - Dev Container
+        - AWS
+        - Google Cloud
+        - Buildkite
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue-or-question
+    attributes:
+      label: Description
+      description: "Describe the issue or question you have."
+      placeholder: "Provide details about the problem or your question regarding the tool."
+    validations:
+      required: true
+
+  - type: input
+    id: tool-version
+    attributes:
+      label: Tool Version
+      description: "If applicable, what version of the tool are you using?"
+      placeholder: "e.g., 1.55.2"

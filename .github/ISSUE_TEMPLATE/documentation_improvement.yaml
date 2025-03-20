@@ -1,0 +1,23 @@
+name: Documentation Improvement
+description: Suggest improvements to the documentation.
+title: "[Docs Name] "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: "Please provide details on what part of the documentation should be improved and how."
+
+  - type: textarea
+    id: documentation-part
+    attributes:
+      label: Part of Documentation
+      description: "Specify the part of the documentation that needs improvement."
+      placeholder: "e.g., README.md, API Reference Section"
+    validations:
+      required: true
+
+  - type: textarea
+    id: improvement-suggestion
+    attributes:
+      label: Improvement Suggestion
+      description: "Describe your suggestion for improvement."

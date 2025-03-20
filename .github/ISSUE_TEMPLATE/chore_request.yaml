@@ -1,0 +1,57 @@
+name: Chore Request
+description: Request a routine task or maintenance work for this project.
+title: "[Chore] "
+labels: ["chore"]
+body:
+  - type: markdown
+    attributes:
+      value: "Please provide detailed information about the chore or maintenance task you're requesting."
+
+  - type: markdown
+    attributes:
+      value: "**Project Environment**"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Select the priority level for this chore.
+      options:
+        - Low
+        - Medium
+        - High
+        - Urgent
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Specify the area of the project this chore relates to.
+      options:
+        - Documentation
+        - Codebase Cleanup
+        - Dependency Update
+        - Testing/Quality
+        - Build System
+        - Deployment
+        - Tooling
+        - Performance
+        - Security
+    validations:
+      required: true
+
+  - type: input
+    id: target-date
+    attributes:
+      label: Target Completion Date
+      description: "If applicable, specify the target date for completing this chore."
+      placeholder: "e.g., 2024-03-01"
+
+  - type: textarea
+    id: task-details
+    attributes:
+      label: Task Details
+      description: "Please list the details of the chore or maintenance task."
+      placeholder: "Describe the task in detail, including any specific goals, steps, or outcomes expected."

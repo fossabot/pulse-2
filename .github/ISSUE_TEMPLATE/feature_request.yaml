@@ -1,0 +1,49 @@
+name: Feature Request
+description: Suggest an idea for this project.
+title: "[Feature Name] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Please provide a detailed description of the feature or enhancement you are proposing."
+
+  - type: markdown
+    attributes:
+      value: "**Environment**"
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      description: Select your device.
+      options:
+        - Linux - x86_64
+        - Linux - aarch64
+        - macOS - Apple Silicon
+        - macOS - Intel
+        - Nvidia Jetson - Orion
+        - Nvidia Jetson - Xavier
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Feature Description
+      description: "Describe the feature you'd like."
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: "Explain why this feature is important."
+    validations:
+      required: true
+
+  - type: textarea
+    id: potential-benefits
+    attributes:
+      label: Potential Benefits
+      description: "What benefits do you foresee this feature providing?"

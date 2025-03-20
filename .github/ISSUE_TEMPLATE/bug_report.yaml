@@ -1,0 +1,75 @@
+name: Bug Report
+description: Report an issue for this project.
+title: "[Bug Name] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Please provide detailed information about the bug or issue you've encountered."
+
+  - type: markdown
+    attributes:
+      value: "**Project Environment**"
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      description: Select your device.
+      options:
+        - Linux - x86_64
+        - Linux - aarch64
+        - macOS - Apple Silicon
+        - macOS - Intel
+        - Nvidia Jetson - Orion
+        - Nvidia Jetson - Xavier
+    validations:
+      required: true
+
+  - type: input
+    id: project-version
+    attributes:
+      label: What release or branch are you running?
+      description: "Please specify the release or branch you are using."
+      placeholder: "e.g., 1.2.3 - main / new_feature"
+
+  - type: input
+    id: bazel-version
+    attributes:
+      label: Bazel Version
+      description: "What version of Bazel Version are you using?"
+      placeholder: "e.g., 6.4.0, 7.0.0"
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: "Please list the steps to reproduce the issue."
+      placeholder: "1. Trigger the problematic function or operation \n2. Note any specific input or conditions \n3. Describe the observed issue or error \n4. Include any relevant context or settings"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: "Describe what you expected to happen."
+      placeholder: "Describe the outcome you expected when performing the steps above. For example, 'The system should process the request and return a success message.'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: "Describe what actually happened."
+      placeholder: "Detail the actual outcome after performing the steps. For example, 'Instead of a success message, the system returned an error code 500 with no further explanation.'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or Error Messages (if applicable)
+      description: "Please include any relevant logs or error messages."
+      placeholder: "Paste logs or error messages here"

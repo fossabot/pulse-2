@@ -1,0 +1,33 @@
+name: Question and Support
+description: Ask a question or request support.
+title: "[question] "
+labels: ["question","support"]
+body:
+  - type: markdown
+    attributes:
+      value: "If you have a question or need support, please provide as much detail as possible."
+
+  - type: input
+    id: email
+    attributes:
+      label: Email Address
+      description: "Please provide your email address for follow-up."
+      placeholder: "example@email.com"
+    validations:
+      required: true
+
+  - type: textarea
+    id: question-detail
+    attributes:
+      label: Question or Support Detail
+      description: "What do you need help with?"
+      placeholder: "Detail your question or the support you need."
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted-solutions
+    attributes:
+      label: What have you tried so far?
+      description: "Describe what you've tried to solve this issue."
+      placeholder: "e.g., Checked documentation, tried X approach..."

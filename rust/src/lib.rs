@@ -1,16 +1,21 @@
-mod common;
+mod config;
 mod error;
-mod options;
 mod session;
-
-#[cfg(feature = "trace")]
-pub mod trace;
 
 #[cfg(feature = "logs")]
 pub mod log;
 
+#[cfg(feature = "trace")]
+pub mod trace;
+
+#[cfg(feature = "metrics")]
+pub mod metrics;
+
 pub use {
-    error::*,
-    options::*,
-    session::{init, init_with_options},
+    config::Config,
+    error::Error,
+    session::{init, Session},
 };
+
+#[cfg(feature = "otel-api")]
+pub use {opentelemetry as otel, opentelemetry_otlp as otlp, opentelemetry_sdk as otel_sdk};

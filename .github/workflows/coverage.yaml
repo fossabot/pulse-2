@@ -1,0 +1,44 @@
+# TODO: Need to fix this once done.
+# name: CodeQL
+
+# on:
+#   push:
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   coverage:
+#     name: Code Coverage
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Check out code
+#         uses: actions/checkout@v4
+
+#       - name: Installing Dependencies
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install libncurses5
+
+#       - name: Setup Bazelisk
+#         uses: bazelbuild/setup-bazelisk@v3
+
+#       - name: Cache Bazel
+#         uses: actions/cache@v4
+#         with:
+#           path: "~/.cache/bazel"
+#           key: ${{ runner.os }}-bazel-${{ hashFiles('**/*.bzl', '**/BUILD*', '**/WORKSPACE*', '**/MODULE*') }}
+#           restore-keys: |
+#             ${{ runner.os }}-bazel-
+
+#       - name: Build and Test with Bazel
+#         run: |
+#           .buildkite/coverage.sh
+
+#       - name: Upload Coverage to Codecov
+#         uses: codecov/codecov-action@v4
+#         with:
+#           token: ${{ secrets.CODECOV_TOKEN }}
+#           directory: coverage/
+#           name: github-actions-${{ github.run_id }}
