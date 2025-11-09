@@ -139,7 +139,7 @@ graph TB
 
 | Language | Status | Documentation |
 |----------|--------|---------------|
-| Go       | ✅ Stable | [go/README.md](go/README.md) |
+| Go       | ✅ Stable | [Go/README.md](go/README.md) |
 | Python   | 🚧 Coming Soon | - |
 | Rust     | 🚧 Coming Soon | - |
 
@@ -169,4 +169,3 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for detai
 ---
 <strong>Built with ❤️ by Machani Robotics</strong>
 | Open Source Observability for Everyone
->>>>>>> 4e6a912 (chore: migrate from Bazel to Go modules and update CI infrastructure)
