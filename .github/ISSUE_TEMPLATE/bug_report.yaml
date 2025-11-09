@@ -31,14 +31,16 @@ body:
     attributes:
       label: What release or branch are you running?
       description: "Please specify the release or branch you are using."
-      placeholder: "e.g., 1.2.3 - main / new_feature"
+      placeholder: "e.g., v1.0.0, main, feature-branch"
+    validations:
+      required: true
 
   - type: input
-    id: bazel-version
+    id: go-version
     attributes:
-      label: Bazel Version
-      description: "What version of Bazel Version are you using?"
-      placeholder: "e.g., 6.4.0, 7.0.0"
+      label: Go Version (if applicable)
+      description: "What version of Go are you using?"
+      placeholder: "e.g., 1.25.0"
 
   - type: textarea
     id: steps-to-reproduce

@@ -1,100 +1,55 @@
-# name: CodeQL
+name: Linting
 
-# on:
-#   push:
-#   pull_request:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-# jobs:
-#   lint-go:
-#     name: Lint Go Code
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check out code
-#         uses: actions/checkout@v4
-#       - name: Set up Go
-#         uses: actions/setup-go@v5
-#         with:
-#           go-version: '1.21.7'
-#       - name: Supercharge Go Linting - Go Client
-#         uses: golangci/golangci-lint-action@v4.0.0
-#         with:
-#           version: v1.42.1
-#           args: --config .golangci.yaml
-#           working-directory: ./go
-#       - name: Supercharge Go Linting - Go Daemon
-#         uses: golangci/golangci-lint-action@v4.0.0
-#         with:
-#           version: v1.42.1
-#           args: --config .golangci.yaml
-#           working-directory: ./daemon
+jobs:
+  lint-go:
+    name: Lint Go Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.0'
+      
+      - name: Lint Go SDK
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+          working-directory: ./go
+          args: --timeout=5m
 
+  lint-markdown:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      
+      - name: Lint Markdown files
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: '**/*.md'
 
-#   lint-python:
-#     name: Lint Python Code
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: actions/setup-python@v5
-#         with:
-#           python-version: '3.12' # Ensure the version is quoted to maintain consistency
-#       - name: Lint Python Code
-#         uses: chartboost/ruff-action@v1
-#         with:
-#           args: check .
-
-#   lint-cpp:
-#     name: Lint C++ Code
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: cpp-linter/cpp-linter-action@v2
-#         id: linter
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           style: file
-#           tidy-checks: ""
-#           thread-comments: ${{ github.event_name == 'pull_request' && 'update' }}
-#       - name: Fail fast if linting fails
-#         if: steps.linter.outputs.checks-failed > 0
-#         run: exit 1
-
-#   lint-rust:
-#     name: Lint Rust Code
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: actions-rs/toolchain@v1
-#         with:
-#           profile: minimal
-#           toolchain: stable
-#           override: true
-#           components: rustfmt, clippy
-#       - name: Check formatting
-#         run: cd rust && cargo fmt -- --check
-#       - name: Lint with Clippy
-#         run:  cd rust && cargo clippy -- -D warnings
-
-#   lint-bazel:
-#     name: Lint Bazel Code
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check out code
-#         uses: actions/checkout@v4
-#       - name: Installing Dependencies
-#         run: |
-#           sudo apt-get update
-#           sudo apt-get install libncurses5
-#       - name: Setup Bazelisk
-#         uses: bazelbuild/setup-bazelisk@v3
-#       - name: Cache Bazel
-#         uses: actions/cache@v4
-#         with:
-#           path: ~/.cache/bazel
-#           key: ${{ runner.os }}-bazel-${{ hashFiles('**/*.bzl', '**/BUILD*', '**/WORKSPACE*', '**/MODULE*') }}
-#           restore-keys: |
-#             ${{ runner.os }}-bazel-
-#       - name: Lint Bazel Files
-#         run: bazel run //tools:buildifier.check
+  lint-yaml:
+    name: Lint YAML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      
+      - name: Lint YAML files
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: .
+          config_file: .yamllint.yml
+          strict: true

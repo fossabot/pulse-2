@@ -1,0 +1,24 @@
+name: "pulse-env"
+include:
+  - ../otel/docker-compose.yaml
+  
+services:
+  devcontainer:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+      - pulse-build-cache:/home/developer/.cache
+      - ${HOME}/.ssh:/home/developer/.ssh
+      - ${HOME}/.aws:/home/developer/.aws
+    network_mode: host
+    command: sleep infinity
+    privileged: true
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+
+volumes:
+  pulse-build-cache:
