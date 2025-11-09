@@ -6,8 +6,6 @@
   <p>Production-grade logging, metrics, tracing, and profiling for modern applications</p>
 </div>
 
----
-
 ## Overview
 
 **Pulse** is a comprehensive observability framework that provides unified telemetry for your applications. Built on OpenTelemetry standards, Pulse makes it easy to instrument your code with structured logging, distributed tracing, metrics collection, and continuous profiling.
