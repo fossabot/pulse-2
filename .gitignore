@@ -5,3 +5,4 @@ credentials
 *.config.json
 rust/**/target
 coverage
+.github/copilot-instructions.md
