@@ -88,7 +88,7 @@ docker compose up -d
 
 Access Grafana at `http://localhost:3000` with all datasources pre-configured.
 
-**[📖 OpenTelemetry Stack Documentation →](otel/README.md)**
+**[📖 OpenTelemetry Stack Documentation →](opentelementry/README.md)**
 
 ## Architecture
 
