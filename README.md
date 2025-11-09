@@ -1,12 +1,12 @@
-# Pulse
-<<<<<<< HEAD
-=======
+# Pulse [![Build status](https://badge.buildkite.com/186e2d78c1a04cff29f1d2be63b7a68fad6c946d3f9f941398.svg)](https://buildkite.com/machanirobotics/pulse) [![codecov](https://codecov.io/gh/machanirobotics/pulse/graph/badge.svg?token=uXWq5jEJBz)](https://codecov.io/gh/machanirobotics/pulse)
 
 <div align="center">
   <img width="250" src="assets/logo.png">
   <h3>Unified Observability Framework</h3>
   <p>Production-grade logging, metrics, tracing, and profiling for modern applications</p>
 </div>
+
+---
 
 ## Overview
 
