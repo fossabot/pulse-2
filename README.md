@@ -1,4 +1,5 @@
 # Pulse [![codecov](https://codecov.io/gh/machanirobotics/pulse/graph/badge.svg?token=uXWq5jEJBz)](https://codecov.io/gh/machanirobotics/pulse)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmachanirobotics%2Fpulse.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmachanirobotics%2Fpulse?ref=badge_shield)
 
 <div align="center">
   <img width="250" src=".assets/logo.png">
@@ -167,3 +168,6 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for detai
 ---
 <strong>Built with ❤️ by Machani Robotics</strong>
 | Open Source Observability for Everyone
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmachanirobotics%2Fpulse.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmachanirobotics%2Fpulse?ref=badge_large)
